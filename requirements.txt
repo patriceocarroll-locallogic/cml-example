@@ -1,3 +1,6 @@
 setuptools
 scikit-learn
 matplotlib
+dvc
+dvc-s3
+mlflow
