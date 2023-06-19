@@ -30,7 +30,7 @@ with mlflow.start_run() as run:
         clf, X_test, y_test, normalize="true", cmap=plt.cm.Blues
     )
     plt.savefig("confusion_matrix.png")
-    mlflow.log_param("max_depth", "depth")
+    mlflow.log_param("max_depth", depth)
     mlflow.log_metric("accuracy", acc)
     mlflow.log_artifact(local_path="confusion_matrix.png", artifact_path="figures")
     mlflow.sklearn.log_model(clf, artifact_path="sklearn-model", signature=signature, registered_model_name="sk-learn-random-forest-reg-model",)
