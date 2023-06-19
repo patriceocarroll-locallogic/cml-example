@@ -3,6 +3,8 @@ from sklearn.metrics import ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 import numpy as np
 import mlflow
+from mlflow.models.signature import infer_signature
+
 # Read in data
 X_train = np.genfromtxt("data/train_features.csv")
 y_train = np.genfromtxt("data/train_labels.csv")
@@ -14,6 +16,9 @@ with mlflow.start_run() as run:
     depth = 8
     clf = RandomForestClassifier(max_depth=depth)
     clf.fit(X_train, y_train)
+
+    y_pred = clf.predict(X_test)
+    signature = infer_signature(X_test, y_pred)
 
     acc = clf.score(X_test, y_test)
     print(acc)
@@ -28,4 +33,4 @@ with mlflow.start_run() as run:
     mlflow.log_param("max_depth", "depth")
     mlflow.log_metric("accuracy", acc)
     mlflow.log_artifact(local_path="confusion_matrix.png", artifact_path="figures")
-
+    mlflow.sklearn.log_model(clf, artifact_path="sklearn-model", signature=signature, registered_model_name="sk-learn-random-forest-reg-model",)
