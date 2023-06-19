@@ -11,7 +11,7 @@ y_test = np.genfromtxt("data/test_labels.csv")
 
 with mlflow.start_run() as run:
     # Fit a model
-    depth = 6
+    depth = 8
     clf = RandomForestClassifier(max_depth=depth)
     clf.fit(X_train, y_train)
 
